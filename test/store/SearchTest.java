@@ -25,13 +25,14 @@ import org.openqa.selenium.WebElement;
 
 public class SearchTest extends BaseTest{
     private StringBuffer verificationErrors = new StringBuffer();
-    boolean isPresent = true;
+    
     //========= Scenario 1 (TARGET FOUND)==============
     //Given an product "apple" that exists on this website
     //When I try to search "apple" in the search bar
     //Then I should able to get the product list whose titles contain keyword "apple" on it
     @Test
-    public void SearchFoundTest() throws Exception {
+    public void searchFoundTest() throws Exception {
+        
         driver.get(baseUrl + "/");
         driver.findElement(By.name("s")).clear();
         driver.findElement(By.name("s")).sendKeys("Apple"+ Keys.RETURN);
@@ -47,10 +48,12 @@ public class SearchTest extends BaseTest{
 //            driver.findElement(By.id("lst-ib")).sendKeys("Hello World!" + Keys.RETURN);
 //        
 //        WebElement rightHandSideHeader = driver.findElement(By.xpath("//div[contains(@class, 'kno-ecr-pt')]"));
-            List<WebElement> items = driver.findElements(By.xpath("//h2[contains(@class, 'prodtitle')]/a"));//????
+            boolean isPresent = true;
+            List<WebElement> titles = driver.findElements(By.xpath("//h2[contains(@class, 'prodtitle')]/a"));//????
 //            waitUntil(d -> d.findElement(By.xpath("//h2[contains(@class, 'prodtitle')]/a")).isDisplayed());
-            for(WebElement item: items){
-                if(!item.getText().matches("Apple")) isPresent = false;// ????
+            //whether each title of product list contains 
+            for(WebElement title: titles){
+                if(!title.getText().contains("Apple")) isPresent = false;// ????
             }
             assertTrue(isPresent);
         } catch (Error e) {
@@ -64,15 +67,16 @@ public class SearchTest extends BaseTest{
     //When I try to search "brush" in the search bar
     //Then I should able to get an error message " Sorry, but nothing matched your search criteria. Please try again with some different keywords." on it
     @Test
-    public void SearchNotFoundTest() throws Exception {
+    public void searchNotFoundTest() throws Exception {
         driver.get(baseUrl + "/");
         driver.findElement(By.name("s")).clear();
         driver.findElement(By.name("s")).sendKeys("brush" + Keys.RETURN);
         
         try {
           By content = By.xpath("//div[@id = 'content']");
-          waitUntil(d -> d.findElement(content).isDisplayed()); 
-          assertEquals("Sorry, but nothing matched your search criteria. Please try again with some different keywords.", driver.findElement(content).getText());
+          waitUntil(d -> d.findElement(content).isDisplayed());
+          
+          assertTrue(driver.findElement(content).getText().contains("Sorry"));
         } catch (Error e) {
           verificationErrors.append(e.toString());
         }

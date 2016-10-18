@@ -6,6 +6,7 @@
 package store;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -43,10 +44,13 @@ public class LoginTest extends BaseTest{
         try {
 //          assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*$"));
 //          assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("Purchase History"));
-            By profile = By.xpath("//a[contains(@class, current)]");
-            waitUntil(d -> d.findElement(profile).isDisplayed()); 
-            assertEquals("Purchase History", driver.findElement(profile).getText());
-                  
+            //By profile = By.xpath("//a[contains(@class, current)]");
+            By username = By.xpath("//a[text()='hanweicheng']");
+            
+            waitUntil(d -> d.findElement(username).isDisplayed()); 
+            assertTrue(driver.findElement(username).getText().contains("hanweicheng")); //the page shows username somewhere
+            
+          //assertEquals("Purchase History", driver.findElement(profile).getText());
         } catch (Error e) {
              verificationErrors.append(e.toString());
         }
@@ -82,7 +86,7 @@ public class LoginTest extends BaseTest{
     public void invalidLoginWrongUserNameTest() throws Exception {
         driver.get(baseUrl + "/tools-qa/");
         driver.findElement(By.id("user_login")).clear();
-        driver.findElement(By.id("user_login")).sendKeys("HAC79");
+        driver.findElement(By.id("user_login")).sendKeys("HAC79"); //wrong username
         driver.findElement(By.id("user_pass")).clear();
         driver.findElement(By.id("user_pass")).sendKeys("123");
         driver.findElement(By.id("wp-submit")).click();
@@ -91,7 +95,6 @@ public class LoginTest extends BaseTest{
           By response = By.xpath("//p[contains(@class, response)]");
           waitUntil(d -> d.findElement(response).isDisplayed()); 
           assertEquals("ERROR: Invalid login credentials.", driver.findElement(response).getText());
-          //assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("Invalid login credentials"));
         } catch (Error e) {
                  verificationErrors.append(e.toString());
             }
