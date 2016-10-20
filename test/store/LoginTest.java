@@ -21,9 +21,7 @@ import org.openqa.selenium.WebElement;
  * 
  */
 public class LoginTest extends BaseTest{
-//    static WebElement usernameInputBox;
-//    static WebElement psdInputBox;
-//    static WebElement logInButton;
+
     private StringBuffer verificationErrors = new StringBuffer();
     
     
@@ -42,15 +40,12 @@ public class LoginTest extends BaseTest{
         driver.findElement(By.id("login")).click();
         //verifyTextPresent
         try {
-//          assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*$"));
-//          assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("Purchase History"));
-            //By profile = By.xpath("//a[contains(@class, current)]");
+
             By username = By.xpath("//a[text()='hanweicheng']");
             
             waitUntil(d -> d.findElement(username).isDisplayed()); 
             assertTrue(driver.findElement(username).getText().contains("hanweicheng")); //the page shows username somewhere
             
-          //assertEquals("Purchase History", driver.findElement(profile).getText());
         } catch (Error e) {
              verificationErrors.append(e.toString());
         }
@@ -99,17 +94,6 @@ public class LoginTest extends BaseTest{
                  verificationErrors.append(e.toString());
             }
     }
-    
-    //========= Scenario 4 (VALID REGISTRATION) ==============
-    //Given a valid email
-    //When I try to register with this email
-    //Then I should receive an message with “register completed:” on it
-    
-   
-    //========= Scenario 5 (INVALID REGISTRATION) ==============
-    //Given an invalid email address
-    //When I try to register with this address
-    //Then I should receive an message with “register completed:” on it
     
     
 }

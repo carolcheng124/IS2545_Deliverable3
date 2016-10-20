@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
  *
@@ -36,21 +37,10 @@ public class SearchTest extends BaseTest{
         driver.get(baseUrl + "/");
         driver.findElement(By.name("s")).clear();
         driver.findElement(By.name("s")).sendKeys("Apple"+ Keys.RETURN);
-        
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[contains(@class, 'prodtitle')]")));
         try {
-//          By productList = By.cssSelector("product_grid_display group");
-//          waitUntil(d -> d.findElement(productList).isDisplayed());
-//            By link = By.xpath("//div[contains(@class, 'grid_product_info')]/a");
-//            assertTrue(driver.findElement(link).getText().matches("Apple"));
-//            Boolean isPresent = driver.findElements(By.cssSelector("")).size()>0;???
-//            assertTrue(isPresent);
-//          assertTrue(driver.findElement(productList).getText().matches("Apple"));//?????
-//            driver.findElement(By.id("lst-ib")).sendKeys("Hello World!" + Keys.RETURN);
-//        
-//        WebElement rightHandSideHeader = driver.findElement(By.xpath("//div[contains(@class, 'kno-ecr-pt')]"));
             boolean isPresent = true;
-            List<WebElement> titles = driver.findElements(By.xpath("//h2[contains(@class, 'prodtitle')]/a"));//????
-//            waitUntil(d -> d.findElement(By.xpath("//h2[contains(@class, 'prodtitle')]/a")).isDisplayed());
+            List<WebElement> titles = driver.findElements(By.xpath("//h2[contains(@class, 'prodtitle')]/a"));
             //whether each title of product list contains 
             for(WebElement title: titles){
                 if(!title.getText().contains("Apple")) isPresent = false;// ????
@@ -71,8 +61,9 @@ public class SearchTest extends BaseTest{
         driver.get(baseUrl + "/");
         driver.findElement(By.name("s")).clear();
         driver.findElement(By.name("s")).sendKeys("brush" + Keys.RETURN);
-        
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id = 'content']")));
         try {
+          
           By content = By.xpath("//div[@id = 'content']");
           waitUntil(d -> d.findElement(content).isDisplayed());
           

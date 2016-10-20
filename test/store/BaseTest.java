@@ -21,16 +21,16 @@ import static org.junit.Assert.*;
  */
 public class BaseTest {
     public WebDriver driver;
-    private WebDriverWait wait;
+    WebDriverWait wait;
     public String baseUrl;
     
     @Before
     public void setup() {
         System.setProperty("webdriver.gecko.driver", "libs/geckodriver");
         driver = new FirefoxDriver();
-        baseUrl = "http://store.demoqa.com/";
+        baseUrl = "http://store.demoqa.com";
 //        selenium = new WebDriverBackedSelenium(driver, baseUrl);
-        wait = new WebDriverWait(driver, 30);
+        wait = new WebDriverWait(driver, 60);
         
     }
     
