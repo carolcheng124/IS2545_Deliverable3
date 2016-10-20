@@ -1,5 +1,5 @@
 # IS2545_Deliverable3
-For the summary, add a description of issues you faced when writing these tests and problems you would expect going forward based on your experiences. If any tests you wrote fail, they should be included here. Also note if there are any special steps to get the tests running.
+Requirement: For the summary, add a description of issues you faced when writing these tests and problems you would expect going forward based on your experiences. If any tests you wrote fail, they should be included here. Also note if there are any special steps to get the tests running.
 
 The issue that I have is when facing up with a complecated e-commerce website, I'm not sure how to pick up 9 test cases among those. I not sure how to design several test cases.
 
