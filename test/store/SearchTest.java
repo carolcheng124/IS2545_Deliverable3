@@ -6,7 +6,6 @@
 package store;
 
 import java.util.List;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -18,56 +17,35 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  *
  * @author Carol
  * ***** USER STORY 2 *****
- * As a user
- * I would like to search product name in the search bar
- * So that I could access to related product list
+ *As a user
+ *I would like to search a product name by typing keyword in the search bar
+ *So that I could visit the list of all relative products.
  * 
  */
 
 public class SearchTest extends BaseTest{
     private StringBuffer verificationErrors = new StringBuffer();
-    
+    final static String KEYWORD = "Apple";
+            
     //========= Scenario 1 (TARGET FOUND)==============
-    //Given an product "apple" that exists on this website
-    //When I try to search "apple" in the search bar
-    //Then I should able to get the product list whose titles contain keyword "apple" on it
+    //Given a keyword "Apple"
+    //When I type this keyword in the search bar
+    //Then I should able to get the list of products whose name contain "Apple".
     @Test
     public void searchFoundTest() throws Exception {
         
         driver.get(baseUrl + "/");
         driver.findElement(By.name("s")).clear();
-        driver.findElement(By.name("s")).sendKeys("Apple"+ Keys.RETURN);
+        driver.findElement(By.name("s")).sendKeys(KEYWORD + Keys.RETURN);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[contains(@class, 'prodtitle')]")));
         try {
             boolean isPresent = true;
             List<WebElement> titles = driver.findElements(By.xpath("//h2[contains(@class, 'prodtitle')]/a"));
             //whether each title of product list contains 
             for(WebElement title: titles){
-                if(!title.getText().contains("Apple")) isPresent = false;// ????
+                if(!title.getText().contains(KEYWORD)) isPresent = false;// ????
             }
             assertTrue(isPresent);
-        } catch (Error e) {
-          verificationErrors.append(e.toString());
-        }
-  }
-
-    
-    //========= Scenario 2 (TARGET NOT FOUND)==============
-    //Given an product "brush" that doesn't exist on this website
-    //When I try to search "brush" in the search bar
-    //Then I should able to get an error message " Sorry, but nothing matched your search criteria. Please try again with some different keywords." on it
-    @Test
-    public void searchNotFoundTest() throws Exception {
-        driver.get(baseUrl + "/");
-        driver.findElement(By.name("s")).clear();
-        driver.findElement(By.name("s")).sendKeys("brush" + Keys.RETURN);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id = 'content']")));
-        try {
-          
-          By content = By.xpath("//div[@id = 'content']");
-          waitUntil(d -> d.findElement(content).isDisplayed());
-          
-          assertTrue(driver.findElement(content).getText().contains("Sorry"));
         } catch (Error e) {
           verificationErrors.append(e.toString());
         }

@@ -8,23 +8,18 @@ package store;
 
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  *
  * @author Carol
- * ***** USER STORY 1 *****
+ * ***** USER STORY 3 *****
  * As a user
  * I would like to manipulate products in my shopping cart
  * So that I could have satisfied products and finally checkout
@@ -36,11 +31,13 @@ public class ShoppingTest extends BaseTest{
     final static String IPHONE5 = "/products-page/product-category/n/";
     final static String CHECKOUT = "/products-page/checkout/";
     
+    
     //========= Scenario 1 (ADD PRODUCT INTO CART) ==============
-    //Given I'm at a product page
+    //Given I'm at a product page of "magic mouse"
     //When I try to add it into my shopping cart
-    //Then I should be able to receive a notification as "just added ** to your cart" and item amount in my cart is increased by one 
-   //@Test
+    //Then I should be able to see this item in my shopping cart 
+    //and item amount in my cart is increased to one 
+   @Test
     public void testAddItem() throws Exception{
         String productName = addItemInCart(MAGIC_MOUSE);
         
@@ -95,11 +92,12 @@ public class ShoppingTest extends BaseTest{
         assertEquals(expected, count);
     }
     
+    
     //========= Scenario 2 (REMOVE PRODUCT INTO CART) ==============
-    //Given a product "iPhone 5" has been already in my shopping cart
+    //Given I just added a product in my shopping cart
     //When I try to remove it from my shopping cart
-    //Then I should able to see the items in my shopping cart decreased by one
-    //@Test
+    //Then I should be able to see my shopping cart doesn't contain this product any longer.
+    @Test
     public void testRemoveItem() throws Exception{
        String productName = addItemInCart(MAGIC_MOUSE);
        removeItemInCart();
@@ -128,11 +126,11 @@ public class ShoppingTest extends BaseTest{
     }
     
   
-    //========= Scenario 3 (CALCULATING PRICE IN CART) ==============
-    //Given a product already in my shopping cart
-    //When I try to remove it from my shopping cart
-    //Then I should able to see the items in my shopping cart decreased by one
-    //@Test
+    //========= Scenario 3 (CALCULATE PRICE IN CART) ==============
+    //Given I just added two products in my shopping cart
+    //When I try to calculate the total price
+    //Then I should able to see the total price shown in the shopping cart is the same with the sum of all product price
+    @Test
     public void testTotalPrice() throws Exception {
        addItemInCart(MAGIC_MOUSE);
        addItemInCart(IPHONE5);
@@ -163,25 +161,77 @@ public class ShoppingTest extends BaseTest{
     
     
     
-    //========= Scenario 4 (CHECK OUT) ==============
-    //Given I'm ready to make payment
-    //When I try to make payment after review shopping cart
-    //Then I should able to see a different payment page, however, for this website, it will return to the previous page
+    //========= Scenario 4 (CHECK OUT/HAPPY PATH) ==============
+    //Given I have already filled in all required fields at the checkout page
+    //When I try to make purchase
+    //Then I should be able to enter a different page instead of returning back to the check-out page.
     @Test
-    public void testCheckout() throws Exception {
+    public void testCheckoutWithFilledForm() throws Exception {
         addItemInCart(MAGIC_MOUSE);
         driver.get(baseUrl + CHECKOUT);
-        driver.findElement(By.cssSelector("#checkout_page_container .step2")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[value='Purchase']")));
-
+        driver.findElement(By.cssSelector("#checkout_page_container .step2")).click(); //"continue" button
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[value='Purchase']"))); //"purchase" button
+        
+        //fill in all the required fields
+        //email
+        driver.findElement(By.id("wpsc_checkout_form_9")).clear();
+        driver.findElement(By.id("wpsc_checkout_form_9")).sendKeys("test@test.com");
+        //firstname
+        driver.findElement(By.id("wpsc_checkout_form_2")).clear();
+        driver.findElement(By.id("wpsc_checkout_form_2")).sendKeys("test");
+        //lastname
+        driver.findElement(By.id("wpsc_checkout_form_3")).clear();
+        driver.findElement(By.id("wpsc_checkout_form_3")).sendKeys("test");
+        //address
+        driver.findElement(By.id("wpsc_checkout_form_4")).clear();
+        driver.findElement(By.id("wpsc_checkout_form_4")).sendKeys("test");
+        //city
+        driver.findElement(By.id("wpsc_checkout_form_5")).clear();
+        driver.findElement(By.id("wpsc_checkout_form_5")).sendKeys("test");
+        //country
+        new Select(driver.findElement(By.id("wpsc_checkout_form_7"))).selectByVisibleText("USA");                
+        //zipcode
+        driver.findElement(By.id("wpsc_checkout_form_8")).clear();
+        driver.findElement(By.id("wpsc_checkout_form_8")).sendKeys("12345");        
+        //phone
+        driver.findElement(By.id("wpsc_checkout_form_18")).clear();
+        driver.findElement(By.id("wpsc_checkout_form_18")).sendKeys("1234567890");
+        
         driver.findElement(By.cssSelector("[value='Purchase']")).click();
         
-        //check-out page should be different with payment page
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//b[text()='Fatal error']")));
+        //after fill in all required fields and click "purchase", it should redirect to a different page
         try {
-          String currentUrl = driver.getCurrentUrl();
-          System.out.println(currentUrl);
-          System.out.println(currentUrl.equals(baseUrl + CHECKOUT));
-          assertFalse(currentUrl.equals(baseUrl + CHECKOUT)); //it jumps back to the check-out page
+          String pageText = driver.findElement(By.cssSelector("body")).getText();
+          System.out.println(pageText);
+          assertFalse(pageText.contains("Checkout")); //it should not go back to the check-out page
+          
+        } catch (Error e) {
+          verificationErrors.append(e.toString());
+        }
+    }
+    
+    //========= Scenario 5 (CHECK OUT/BAD PATH) ==============
+    //Given I have not filled any required fields at check-out page
+    //When I try to make purchase
+    //Then I should be able to return back to the check-out page instead of entering another page.
+    @Test
+    public void testCheckoutWithoutFilledForm() throws Exception {
+        addItemInCart(MAGIC_MOUSE);
+        driver.get(baseUrl + CHECKOUT);
+        driver.findElement(By.cssSelector("#checkout_page_container .step2")).click(); //"continue" button
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[value='Purchase']"))); 
+        //click "purchase" button
+        driver.findElement(By.cssSelector("[value='Purchase']")).click();
+        
+        //if I didn't fill in any form and click "purchase", it should return me back to check-out page
+        try {
+          wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[contains(@class, 'entry-title')]")));
+          String entryTitle = driver.findElement(By.xpath("//h1[contains(@class, 'entry-title')]")).getText();
+          
+          //it should jump back to the check-out page
+          assertTrue(entryTitle.equals("Checkout")); 
+          
         } catch (Error e) {
           verificationErrors.append(e.toString());
         }
