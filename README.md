@@ -7,9 +7,8 @@ The issue that I had at the begining was the confusion when facing up with a com
 All my tests passed.
 
 
-/***********
-    USER STORY 1
-              ***********/
+## *** USER STORY 1 ***
+    
 
 As a user, I would like to login, So that I could access to my account information.
 
@@ -26,39 +25,36 @@ Given a correct username and an incorrect password, When I try to log in with th
 Given an incorrect username, When I try to log in with those credentials, Then I should receive an error message with “Invalid login credentials” on it.
 
 
-/***********
-    USER STORY 2
-              ***********/
+## *** USER STORY 2 ***
 
 As a user, I would like to search a product name by typing keyword in the search bar, So that I could visit the list of all relative products.
 
-4. Scenario 1 (TARGET FOUND)
+#### 4. Scenario 1 (TARGET FOUND)
 
 Given a keyword "Apple", When I type this keyword in the search bar, Then I should able to get the list of products whose name contain "Apple".
 
 
-/***********
-    USER STORY 3
-              ***********/
+
+## *** USER STORY 3 ***
 
 As a user, I would like to manipulate products in the shopping cart, So that I could have satisfied products and finally checkout.
 
-5. Scenario 1 (ADD PRODUCT INTO CART)
+#### 5. Scenario 1 (ADD PRODUCT INTO CART)
 
 Given I'm at a product page of "magic mouse", When I try to add it into my shopping cart, Then I should be able to see product amount of my cart is increased to 1, and my shopping cart contains this product.
 
-6. Scenario 2 (REMOVE PRODUCT INTO CART)
+#### 6. Scenario 2 (REMOVE PRODUCT INTO CART)
 
 Given I just added a product in my shopping cart, When I try to remove it from my shopping cart, Then I should be able to see my shopping cart doesn't contain this product any longer.
 
-7. Scenario 3 (CALCULATE PRICE IN CART)
+#### 7. Scenario 3 (CALCULATE PRICE IN CART)
 
 Given I just added two products in my shopping cart, When I try to calculate the total price, Then I should able to see the total price shown in the shopping cart is the same with the sum of all product price.
 
-8. Scenario 4 (CHECK OUT/HAPPY PATH)
+#### 8. Scenario 4 (CHECK OUT/HAPPY PATH)
 
 Given I have already filled in all required fields at check-out page, When I try to make purchase, Then I should be able to enter a different page instead of returning back to the check-out page.
 
-8. Scenario 5 (CHECK OUT/BAD PATH)
+#### 9. Scenario 5 (CHECK OUT/BAD PATH)
 Given I have not filled any required fields at check-out page, When I try to make purchase, Then I should be able to return back to the check-out page instead of entering another page.
 
