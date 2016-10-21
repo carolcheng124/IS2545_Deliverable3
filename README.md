@@ -41,7 +41,7 @@ As a user, I would like to manipulate products in the shopping cart, calculate t
 
 #### 5. Scenario 1 (ADD PRODUCT INTO CART)
 
-Given I'm at a product page of "magic mouse", When I try to add it into my shopping cart, Then I should be able to see product amount of my cart is increased to 1, and my shopping cart contains this product.
+Given I'm at a product page of "magic mouse" and my shopping cart is empty, When I try to add it into my shopping cart, Then I should be able to see product amount of my cart is increased to 1, and my shopping cart contains this product.
 
 #### 6. Scenario 2 (REMOVE PRODUCT INTO CART)
 
