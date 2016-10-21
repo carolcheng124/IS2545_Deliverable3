@@ -9,15 +9,11 @@ import com.google.common.base.Predicate;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
-import static org.junit.Assert.*;
 /**
  *
- * @author AsphaltPanthers
+ * @author Carol
  */
 public class BaseTest {
     public WebDriver driver;
