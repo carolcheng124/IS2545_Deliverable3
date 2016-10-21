@@ -1,21 +1,26 @@
 # IS2545_Deliverable3
-Requirement: For the summary, add a description of issues you faced when writing these tests and problems you would expect going forward based on your experiences. If any tests you wrote fail, they should be included here. Also note if there are any special steps to get the tests running.
 
-The issue that I have is when facing up with a complecated e-commerce website, I'm not sure how to pick up 9 test cases among those. I not sure how to design several test cases.
+ISSUE
 
-**** USER STORY 1 *****
+The issue that I had at the begining was the confusion when facing up with a complicated e-commerce website, I was not sure how to organize nine test cases and how to design them. Then, I had problem implementing Selenium and Webdriver due to the lacking of basic knowledge and experience.
+
+All my tests passed.
+
+/******
+    USER STORY 1
+              ******/
 
 As a user, I would like to login, So that I could access to my account information.
 
-========= Scenario 1 (Valid login) ===============
+1. Scenario 1 (VALID LOGIN/HAPPY PATH)
 
-Given correct username and correct password, When I try to log in with those credentials, Then I should able to get access to profile information such as purchase history.
+Given correct username and correct password, When I try to log in with those credentials, Then I should able to login successfully with page showing my username.
 
-========= Scenario 2 (INVALID LOGIN) ==============
+2. Scenario 2 (INVALID LOGIN/BAD PATH) 
 
-Given a correct username And an incorrect password, When I try to log in with those credentials, Then I should receive an error message with “Invalid login credentials” on it.
+Given a correct username and an incorrect password, When I try to log in with those credentials, Then I should receive an error message with “Invalid login credentials” on it.
 
-========= Scenario 3 (INVALID LOGIN) ==============
+3. Scenario 3 (INVALID LOGIN/BAD PATH)
 
 Given an incorrect username, When I try to log in with those credentials, Then I should receive an error message with “Invalid login credentials” on it.
 
