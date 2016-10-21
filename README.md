@@ -37,7 +37,7 @@ Given a keyword "Apple", When I type this keyword in the search bar, Then I shou
 
 ## *** USER STORY 3 ***
 
-As a user, I would like to manipulate products in the shopping cart, So that I could have satisfied products and finally checkout.
+As a user, I would like to manipulate products in the shopping cart, calculate the price and checkout, So that I could buy satisfied products.
 
 #### 5. Scenario 1 (ADD PRODUCT INTO CART)
 
