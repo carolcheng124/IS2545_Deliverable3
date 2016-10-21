@@ -13,15 +13,15 @@ All my tests passed.
 
 As a user, I would like to login, So that I could access to my account information.
 
-1. Scenario 1 (VALID LOGIN/HAPPY PATH)
+- Scenario 1 (VALID LOGIN/HAPPY PATH)
 
 Given correct username and correct password, When I try to log in with those credentials, Then I should be able to login successfully with page showing my username.
 
-2. Scenario 2 (INVALID LOGIN/BAD PATH) 
+- Scenario 2 (INVALID LOGIN/BAD PATH) 
 
 Given a correct username and an incorrect password, When I try to log in with those credentials, Then I should receive an error message with “Invalid login credentials” on it.
 
-3. Scenario 3 (INVALID LOGIN/BAD PATH)
+- Scenario 3 (INVALID LOGIN/BAD PATH)
 
 Given an incorrect username, When I try to log in with those credentials, Then I should receive an error message with “Invalid login credentials” on it.
 
